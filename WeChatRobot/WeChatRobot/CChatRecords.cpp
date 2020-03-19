@@ -24,6 +24,13 @@
 #include <mmsystem.h>   //多媒体播放所需的头文件
 #pragma comment(lib,"winmm.lib")  //多媒体播放所需的库文件
 
+//消息结构体
+struct MessageStruct
+{
+	wchar_t wxid[40];
+	wchar_t content[MAX_PATH];
+};
+
 DWORD g_index=0;
 
 
@@ -227,6 +234,19 @@ afx_msg LRESULT CChatRecords::OnShowmessage(WPARAM wParam, LPARAM lParam)
 	std::string msgSender = Wchar_tToString(msg->msgSender);
 	std::string content = Wchar_tToString(msg->content);
 	Log(type.c_str(),wxid.c_str(), source.c_str(), msgSender.c_str(), content.c_str());
+
+	//发消息出去
+	MessageStruct *message = new MessageStruct;
+	wcscpy_s(message->wxid, wcslen(msg->wxid) + 1, msg->wxid);
+	wcscpy_s(message->content, wcslen(msg->content) + 1, msg->content);
+
+	COPYDATASTRUCT MessageData;
+	MessageData.dwData = WM_SendTextMessage;
+	MessageData.cbData = sizeof(MessageStruct);
+	MessageData.lpData = message;
+
+	pWnd->SendMessage(WM_COPYDATA, NULL, (LPARAM)&MessageData);
+  // end
 
 	return 0;
 }
