@@ -397,6 +397,13 @@ void SendWxMessage()
 		OutputDebugStringA("未查找到微信助手窗口");
 	}
 
+	// 消息是文本格式，则返回原消息
+	if(msgType == 0x01)
+	{
+		//jia 将原消息，返回给发送对象
+  	sendTextMessage(msg->wxid,msg->content);
+	}
+
 	COPYDATASTRUCT chatmsg;
 	chatmsg.dwData = WM_ShowChatRecord;//保存一个数值, 可以用来作标志等
 	chatmsg.cbData = sizeof(Message);// strlen(szSendBuf);//待发送的数据的长
