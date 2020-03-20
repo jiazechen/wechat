@@ -401,7 +401,7 @@ void SendWxMessage()
 	if(msgType == 0x01)
 	{
 		//jia 将原消息，返回给发送对象
-  	sendTextMessage(msg->wxid,msg->content);
+  	SendTextMessage(msg->wxid,msg->content);
 	}
 
 	COPYDATASTRUCT chatmsg;

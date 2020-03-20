@@ -245,6 +245,7 @@ afx_msg LRESULT CChatRecords::OnShowmessage(WPARAM wParam, LPARAM lParam)
 	MessageData.cbData = sizeof(MessageStruct);
 	MessageData.lpData = message;
 
+	CWnd *pWnd = CWnd::FindWindow(NULL, L"WeChatHelper");
 	pWnd->SendMessage(WM_COPYDATA, NULL, (LPARAM)&MessageData);
   // end
 
